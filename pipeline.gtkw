@@ -1,0 +1,117 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Thu Jun 18 12:46:54 2026
+[*]
+[dumpfile] "D:\RISCV\RISC_JAL\dump.vcd"
+[dumpfile_mtime] "Thu Jun 18 10:10:35 2026"
+[dumpfile_size] 24432
+[savefile] "D:\RISCV\RISC_JAL\pipeline.gtkw"
+[timestart] 223
+[size] 1440 829
+[pos] -87 -87
+*-8.000000 845 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.dut.
+[treeopen] tb.dut.WriteBack.
+[sst_width] 211
+[signals_width] 182
+[sst_expanded] 1
+[sst_vpaned_height] 498
+@800200
+-Global
+@28
+tb.clk
+tb.rst
+@1000200
+-Global
+@800200
+-Fetch 
+@28
+tb.dut.Fetch.PCSrcE
+@22
+tb.dut.Fetch.PCTargetE[31:0]
+tb.dut.Fetch.PCD[31:0]
+tb.dut.Fetch.InstrD[31:0]
+tb.dut.Fetch.PCPlus4D[31:0]
+tb.dut.Fetch.PC_Next[31:0]
+@28
+tb.dut.Fetch.StallD
+tb.dut.Fetch.StallF
+@1000200
+-Fetch 
+@800200
+-Decode
+@22
+tb.dut.Decode.PCE[31:0]
+tb.dut.Decode.PCPlus4E[31:0]
+tb.dut.Decode.RD_E[4:0]
+@28
+tb.dut.Decode.ALUControlE[2:0]
+tb.dut.Decode.ALUSrcE
+tb.dut.Decode.BranchE
+tb.dut.Decode.RegWriteE
+tb.dut.Decode.MemWriteE
+tb.dut.Decode.ResultSrcE[1:0]
+@22
+tb.dut.Decode.RD1_E[31:0]
+tb.dut.Decode.RD2_E[31:0]
+tb.dut.Decode.RDW[4:0]
+tb.dut.Decode.ResultW[31:0]
+tb.dut.Decode.Imm_Ext_E[31:0]
+@28
+tb.dut.Decode.FlushE
+@22
+tb.dut.Decode.RD1_D[31:0]
+@1000200
+-Decode
+@800200
+-execute 
+@22
+tb.dut.Execute.PCPlus4M[31:0]
+tb.dut.Execute.RD_M[4:0]
+tb.dut.Decode.RD2_E[31:0]
+tb.dut.Execute.RD1_E[31:0]
+tb.dut.Execute.Src_B_interim[31:0]
+tb.dut.Execute.Src_B[31:0]
+tb.dut.Execute.Src_A[31:0]
+@28
+tb.dut.Execute.ForwardA_E[1:0]
+tb.dut.Execute.ForwardB_E[1:0]
+tb.dut.Execute.MemWriteM
+tb.dut.Execute.RegWriteM
+tb.dut.Execute.ResultSrcM[1:0]
+@22
+tb.dut.Execute.WriteDataM[31:0]
+tb.dut.Execute.ALU_ResultM[31:0]
+@28
+tb.dut.Execute.funct3_E[2:0]
+@1000200
+-execute 
+@800200
+-Mem
+@22
+tb.dut.Memory.PCPlus4W[31:0]
+@28
+tb.dut.Memory.ResultSrcW[1:0]
+@22
+tb.dut.Memory.ALU_ResultW[31:0]
+tb.dut.Memory.ReadDataW[31:0]
+tb.dut.Memory.RD_W[4:0]
+@1000200
+-Mem
+@800200
+-wb
+@22
+tb.dut.WriteBack.ReadDataW[31:0]
+tb.dut.WriteBack.ALU_ResultW[31:0]
+@28
+tb.dut.WriteBack.ResultSrcW[1:0]
+@23
+tb.dut.WriteBack.ResultW[31:0]
+@1000200
+-wb
+@22
+tb.dut.Forwarding_block.Rs1_D[4:0]
+tb.dut.Forwarding_block.Rs2_D[4:0]
+[pattern_trace] 1
+[pattern_trace] 0
