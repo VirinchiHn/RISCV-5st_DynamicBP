@@ -7,11 +7,11 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
     input [31:0] InstrD, PCD, PCPlus4D, ResultW;
     input FlushE;
 
-    // ADDED: prediction info from fetch
+    // prediction info from fetch
     input PredTakenD;
     input [31:0] PredTargetD;
 
-    // ADDED: prediction info going to execute
+    //prediction info going to execute
     output PredTakenE;
     output [31:0] PredTargetE;
 
@@ -31,7 +31,8 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
     wire [1:0] ImmSrcD;
     wire [2:0] ALUControlD;
     wire [31:0] RD1_D, RD2_D, Imm_Ext_D;
-        // ADDED: carry prediction info in ID/EX register
+    
+    // carry prediction info in ID/EX register
 
     reg PredTakenD_r;
     reg [31:0] PredTargetD_r;
@@ -40,15 +41,13 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
     reg RegWriteD_r,ALUSrcD_r,MemWriteD_r,BranchD_r,JumpD_r,JalrD_r;
     reg [1:0] ResultSrcD_r;
     reg [2:0] ALUControlD_r;
-    // ADDED: pipeline funct3 into execute stage for beq/bne/blt/bge/bltu/bgeu
+    //pipeline funct3 into execute stage for beq/bne/blt/bge/bltu/bgeu
     reg [2:0] funct3_D_r;
     reg [31:0] RD1_D_r, RD2_D_r, Imm_Ext_D_r;
     reg [4:0] RD_D_r, RS1_D_r, RS2_D_r;
     reg [31:0] PCD_r, PCPlus4D_r;
 
 
-    // Initiate the modules
-    // Control Unit
     Control_Unit_Top control (
                             .Op(InstrD[6:0]),
                             .RegWrite(RegWriteD),
@@ -90,17 +89,17 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
             ALUSrcD_r <= 1'b0;
             MemWriteD_r <= 1'b0;
 
-            // CHANGED: 2-bit reset
+            
             ResultSrcD_r <= 2'b00;
 
             BranchD_r <= 1'b0;
 
-            // ADDED: reset jump signals
+            //reset jump signals
             JumpD_r <= 1'b0;
             JalrD_r <= 1'b0;
-            // ADDED
+            
             funct3_D_r <= 3'b000;
-            // ADDED
+            
             PredTakenD_r <= 1'b0;
             PredTargetD_r <= 32'h00000000;
 
@@ -121,12 +120,12 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
             ResultSrcD_r <= ResultSrcD;
             BranchD_r <= BranchD;
 
-            // ADDED: pipeline jump signals into Execute stage
+            //pipeline jump signals into Execute stage
             JumpD_r <= JumpD;
             JalrD_r <= JalrD;
-            // ADDED
+            
             funct3_D_r <= InstrD[14:12];
-            // ADDED
+           
 
             PredTakenD_r <= PredTakenD;
             PredTargetD_r <= PredTargetD;
@@ -150,12 +149,10 @@ module decode_cycle(clk, rst, InstrD, PCD, PCPlus4D, PredTakenD, PredTargetD, Re
     assign ResultSrcE = ResultSrcD_r;
     assign BranchE = BranchD_r;
 
-    // ADDED: send Jump/Jalr to Execute stage
+    // send Jump/Jalr to Execute stage
     assign JumpE = JumpD_r;
     assign JalrE = JalrD_r;
-    // ADDED
-
-    // ADDED
+    
     assign PredTakenE = PredTakenD_r;
     assign PredTargetE = PredTargetD_r;
     
