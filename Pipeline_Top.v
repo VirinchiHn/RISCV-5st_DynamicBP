@@ -19,7 +19,7 @@ module Pipeline_top(clk, rst);
 
     input clk, rst;
 
-    // ADDED: dynamic branch prediction wires
+    //dynamic branch prediction wires
     wire PredTakenD, PredTakenE;
     wire [31:0] PredTargetD, PredTargetE;
 
@@ -42,7 +42,7 @@ module Pipeline_top(clk, rst);
     wire [4:0] RS1_E, RS2_E;
     wire [1:0] ForwardBE, ForwardAE;
 
-    // ADDED: stall and flush control signals from hazard unit
+    //stall and flush control signals from hazard unit
     wire StallF, StallD, FlushD, FlushE;
     
 
@@ -76,7 +76,7 @@ module Pipeline_top(clk, rst);
                         .clk(clk), 
                         .rst(rst),
 
-                        // ADDED: convert ID/EX pipeline register to NOP on stall or taken branch/jump
+                        //convert ID/EX pipeline register to NOP on stall or taken branch/jump
                         .FlushE(FlushE),
 
                         .PredTakenD(PredTakenD),
@@ -185,7 +185,7 @@ module Pipeline_top(clk, rst);
                         .RegWriteM(RegWriteM), 
                         .RegWriteW(RegWriteW),
 
-                        // ADDED: load-use hazard detection inputs
+                        //load-use hazard detection inputs
                         .ResultSrcE(ResultSrcE),
                         .RD_E(RD_E),
 
@@ -194,17 +194,17 @@ module Pipeline_top(clk, rst);
                         .Rs1_E(RS1_E), 
                         .Rs2_E(RS2_E),
 
-                        // ADDED: source registers from decode stage for load-use hazard detection
+                        // source registers from decode stage for load-use hazard detection
                         .Rs1_D(InstrD[19:15]),
                         .Rs2_D(InstrD[24:20]),
 
-                        // ADDED: branch/jump taken signal for static predict-not-taken flush
+                        //branch/jump taken signal for static predict-not-taken flush
                         .MispredictE(MispredictE),
 
                         .ForwardAE(ForwardAE), 
                         .ForwardBE(ForwardBE),
 
-                        // ADDED: stall and flush outputs
+                        //stall and flush outputs
                         .StallF(StallF),
                         .StallD(StallD),
                         .FlushD(FlushD),
