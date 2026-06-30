@@ -23,11 +23,11 @@ module fetch_cycle(
 
     input clk, rst;
 
-    // ADDED: recovery from execute stage when prediction is wrong
+    //recovery from execute stage when prediction is wrong
     input MispredictE;
     input [31:0] CorrectPCE;
 
-    // ADDED: branch predictor update info from execute stage
+    //branch predictor update info from execute stage
     input BranchE;
     input BranchTakenE;
     input [31:0] PCE;
@@ -40,7 +40,7 @@ module fetch_cycle(
     output [31:0] InstrD;
     output [31:0] PCD, PCPlus4D;
 
-    // ADDED: prediction info carried to decode/execute
+    //prediction info carried to decode/execute
     output PredTakenD;
     output [31:0] PredTargetD;
 
@@ -54,11 +54,11 @@ module fetch_cycle(
     reg [31:0] InstrF_reg;
     reg [31:0] PCF_reg, PCPlus4F_reg;
 
-    // ADDED: IF/ID prediction pipeline registers
+    // IF/ID prediction pipeline registers
     reg PredTakenF_reg;
     reg [31:0] PredTargetF_reg;
 
-    // ADDED: dynamic branch predictor
+    //dynamic branch predictor
     Branch_Predictor BP (
         .clk(clk),
         .rst(rst),
@@ -74,7 +74,6 @@ module fetch_cycle(
         .ActualTargetE(PCTargetE)
     );
 
-    // CHANGED:
     // Old: PC_Next = PCSrcE ? PCTargetE : PCPlus4F
     // New: normally follow predictor, but if execute says wrong, use CorrectPCE
     Mux PC_MUX (
@@ -84,7 +83,6 @@ module fetch_cycle(
         .c(PC_Next)
     );
 
-    // SAME AS YOUR OLD STALL MUX
     Mux STALL_MUX (
         .a(PC_Next),
         .b(PCF),
@@ -125,7 +123,7 @@ module fetch_cycle(
             PCF_reg <= 32'h00000000;
             PCPlus4F_reg <= 32'h00000000;
 
-            // ADDED: flush prediction info also
+            //flush prediction info also
             PredTakenF_reg <= 1'b0;
             PredTargetF_reg <= 32'h00000000;
         end
@@ -134,7 +132,7 @@ module fetch_cycle(
             PCF_reg <= PCF_reg;
             PCPlus4F_reg <= PCPlus4F_reg;
 
-            // ADDED: hold prediction info during stall
+            //hold prediction info during stall
             PredTakenF_reg <= PredTakenF_reg;
             PredTargetF_reg <= PredTargetF_reg;
         end
@@ -143,7 +141,7 @@ module fetch_cycle(
             PCF_reg <= PCF;
             PCPlus4F_reg <= PCPlus4F;
 
-            // ADDED: pass prediction info with same instruction
+            //pass prediction info with same instruction
             PredTakenF_reg <= PredTakenF;
             PredTargetF_reg <= PredTargetF;
         end
