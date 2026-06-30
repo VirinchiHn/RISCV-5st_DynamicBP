@@ -40,12 +40,10 @@ module hazard_unit(
     assign StallF = LoadUseHazard;
     assign StallD = LoadUseHazard;
 
-    // CHANGED:
-    // Old: FlushD = PCSrcE
-    // New: FlushD only when prediction was wrong
+    // Old : FlushD = PCSrcE
+    //FlushD only when prediction was wrong
     assign FlushD = MispredictE;
 
-    // CHANGED:
     // FlushE on either branch misprediction or load-use bubble
     assign FlushE = MispredictE | LoadUseHazard;
 
