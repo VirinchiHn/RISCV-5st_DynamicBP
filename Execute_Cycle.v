@@ -6,11 +6,11 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
     input clk, rst, RegWriteE, ALUSrcE, MemWriteE, BranchE, JumpE, JalrE;
 
     input [1:0] ResultSrcE;
-    // ADDED: prediction info from decode stage
+    //prediction info from decode stage
     input PredTakenE;
     input [31:0] PredTargetE;
 
-    // ADDED: branch funct3 coming from decode stage
+    //branch funct3 coming from decode stage
     input [2:0] funct3_E;
 
     input [2:0] ALUControlE;
@@ -34,10 +34,10 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
     wire [31:0] ResultE;
     wire [31:0] PCBranchTargetE;
 
-    // ADDED: extra ALU flags for branch decisions
+    //extra ALU flags for branch decisions
     wire ZeroE, NegativeE, CarryE, OverFlowE;
 
-    // ADDED: final branch condition result
+    //final branch condition result
     //wire BranchTakenE;
 
     // Declaration of Register
@@ -47,7 +47,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
     reg [4:0] RD_E_r;
     reg [31:0] PCPlus4E_r, RD2_E_r, ResultE_r;
 
-    // 3 by 1 Mux for Source A
+    // 3 by 1 Mux for Source A(FORWARDING)
     Mux_3_by_1 srca_mux (
                         .a(RD1_E),
                         .b(ResultW),
@@ -80,7 +80,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
             .Result(ResultE),
             .ALUControl(ALUControlE),
 
-            // ADDED: connect flags instead of leaving them open
+            //connect flags instead of leaving them open
             .OverFlow(OverFlowE),
             .Carry(CarryE),
             .Zero(ZeroE),
@@ -99,7 +99,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
     // JALR uses rs1 + Imm, which is ALU ResultE
     assign PCTargetE = (JalrE == 1'b1) ? ResultE : PCBranchTargetE;
 
-    // ADDED: branch condition logic using funct3
+    //branch condition logic using funct3
     assign BranchTakenE =
             (funct3_E == 3'b000) ? ZeroE :                    // beq
             (funct3_E == 3'b001) ? ~ZeroE :                   // bne
@@ -134,15 +134,13 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
 
     // Output Assignments
 
-    // CHANGED: now supports beq, bne, blt, bge, bltu, bgeu, jal, jalr
+    //now supports beq, bne, blt, bge, bltu, bgeu, jal, jalr
     assign PCSrcE = (BranchE & BranchTakenE) | JumpE;
 
-    // ADDED:
     // If actual control-flow says taken/jump, correct PC is actual target.
     // If branch is not taken, correct PC is PC + 4.
     assign CorrectPCE = PCSrcE ? PCTargetE : PCPlus4E;
 
-    // ADDED:
     // Conditional branches are checked against prediction.
     // JAL/JALR are not predicted here, so redirect when JumpE is high.
     assign MispredictE =
